@@ -5,4 +5,7 @@ reconciled_data/
 test/
 .vscode/
 
+*.ps1
+profiles.yml
+
 **/__pycache__
