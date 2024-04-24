@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: northwind
+    database: northwind
+    schema: public
+    tables:
+      - name: customers
+      - name: employees
+      - name: order_details
+      - name: orders
+      - name: products
+      - name: suppliers
+
+models:
+  - name: stg_customer
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_employee
+    columns:
+      - name: employee_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_product
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_detail
+    test:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - product_id
+    columns:
+      - name: quantity
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: false
+
+
+

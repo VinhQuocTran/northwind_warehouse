@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: fact_sales
+    columns:
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_id
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
+      - name: employee_id
+        tests:
+          - relationships:
+              to: ref('dim_employee')
+              field: employee_id
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_order')
+              field: order_id
+
