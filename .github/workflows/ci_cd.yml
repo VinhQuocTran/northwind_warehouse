@@ -20,4 +20,4 @@ jobs:
 
     steps:
       - name: Echo Hello World
-        run: echo $DBT_PROFILE_DBNAME
+        run: echo $DBT_PROFILE_SCHEMA
