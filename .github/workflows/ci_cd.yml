@@ -6,18 +6,21 @@ on:
     branches:
       - main
 
-env:
-  DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
-  DBT_PROFILE_HOST: ${{ secrets.DBT_PROFILE_HOST }}
-  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
-  DBT_PROFILE_SCHEMA: ${{ vars.DBT_PROFILE_SCHEMA }}
+
+
 
 
 
 jobs:
   hello:
-    runs-on: ubuntu-latest  # Run on Ubuntu virtual machines
+    environment: CI
+    env:
+      DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
+      DBT_PROFILE_HOST: ${{ secrets.DBT_PROFILE_HOST }}
+      DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+      DBT_PROFILE_SCHEMA: ${{ vars.DBT_PROFILE_SCHEMA }}
 
+    runs-on: ubuntu-latest  # Run on Ubuntu virtual machine
     steps:
       - name: Echo Hello World
         run: echo $DBT_PROFILE_SCHEMA
