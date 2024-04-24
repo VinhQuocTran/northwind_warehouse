@@ -13,7 +13,7 @@ on:
 
 jobs:
   hello:
-    environment: CI
+    environment: dev
     env:
       DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
       DBT_PROFILE_HOST: ${{ secrets.DBT_PROFILE_HOST }}
