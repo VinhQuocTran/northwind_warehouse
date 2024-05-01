@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  ci:
+  dbt_ci_cd:
     environment: dev
     env:
       DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
@@ -40,7 +40,7 @@ jobs:
       - name: Auto-format SQL code
         run: |
           pip install sqlfluff
-          sqlfluff fix .
+          sqlfluff fix . --dialect ansi
         working-directory: ./northwind_dw/models
 
       - name: Run the models
