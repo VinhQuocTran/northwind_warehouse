@@ -35,14 +35,18 @@ jobs:
 
       - name: Install dbt packages
         run: dbt deps
+        working-directory: ./northwind_dw
 
       - name: Auto-format SQL code
         run: |
           pip install sqlfluff
           sqlfluff fix .
+        working-directory: ./northwind_dw/models
 
       - name: Run the models
         run: dbt run
+        working-directory: ./northwind_dw
       
       - name: Run tests
         run: dbt test
+        working-directory: ./northwind_dw
