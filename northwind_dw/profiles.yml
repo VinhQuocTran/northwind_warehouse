@@ -4,7 +4,7 @@ northwind_dw:
       dbname: "{{ env_var('DBT_PROFILE_DBNAME') }}"
       host: "{{ env_var('DBT_PROFILE_HOST') }}"
       pass: "{{ env_var('DBT_PROFILE_PASSWORD') }}"
-      port: 55432
+      port: "{{ env_var('DBT_PROFILE_PORT')|int }}"
       schema: "{{ env_var('DBT_PROFILE_SCHEMA') }}"
       threads: 1
       type: postgres

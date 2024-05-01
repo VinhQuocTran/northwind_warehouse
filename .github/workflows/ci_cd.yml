@@ -7,20 +7,42 @@ on:
       - main
 
 
-
-environment: dev
-env:
-  DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
-  DBT_PROFILE_HOST: ${{ secrets.DBT_PROFILE_HOST }}
-  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
-  DBT_PROFILE_SCHEMA: ${{ vars.DBT_PROFILE_SCHEMA }}
-
-
 jobs:
-  hello:
-    
+  ci:
+    environment: dev
+    env:
+      DBT_PROFILE_DBNAME: ${{ secrets.DBT_PROFILE_DBNAME }}
+      DBT_PROFILE_HOST: ${{ secrets.DBT_PROFILE_HOST }}
+      DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+      DBT_PROFILE_SCHEMA: ${{ vars.DBT_PROFILE_SCHEMA }}
 
     runs-on: ubuntu-latest  # Run on Ubuntu virtual machine
+    timeout-minutes: 90
+
     steps:
-      - name: Echo Hello World
-        run: echo $DBT_PROFILE_SCHEMA
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Auto-format SQL code
+        run: |
+          pip install sqlfluff
+          sqlfluff fix .
+
+      - name: Run the models
+        run: dbt run
+      
+      - name: Run tests
+        run: dbt test
